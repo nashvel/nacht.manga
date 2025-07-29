@@ -113,17 +113,50 @@
         
         // Override social media links and update project descriptions
         document.addEventListener('DOMContentLoaded', function() {
-            // Find and update Twitter link
-            const twitterLinks = document.querySelectorAll('a[href*="x.com/flowbert"]');
-            twitterLinks.forEach(link => {
-                link.href = 'https://x.com/Nnashidk';
+            // Find and update Twitter link - multiple selectors
+            const twitterSelectors = [
+                'a[href*="x.com"]',
+                'a[href*="twitter.com"]',
+                'a[href*="flowbert"]'
+            ];
+            twitterSelectors.forEach(selector => {
+                const links = document.querySelectorAll(selector);
+                links.forEach(link => {
+                    link.href = 'https://x.com/Nnashidk';
+                });
             });
             
-            // Find and update Instagram link
-            const instagramLinks = document.querySelectorAll('a[href*="framer.com/marketplace/creator/gustave-flowbert"]');
-            instagramLinks.forEach(link => {
-                link.href = 'https://instagram.com/_nashidk';
+            // Find and update Instagram link - multiple selectors
+            const instagramSelectors = [
+                'a[href*="instagram.com"]',
+                'a[href*="framer.com/marketplace"]',
+                'a[href*="gustave-flowbert"]'
+            ];
+            instagramSelectors.forEach(selector => {
+                const links = document.querySelectorAll(selector);
+                links.forEach(link => {
+                    link.href = 'https://instagram.com/_nashidk';
+                });
             });
+            
+            // Delayed backup for social media links (in case they load dynamically)
+            setTimeout(function() {
+                // Twitter backup
+                const allTwitterLinks = document.querySelectorAll('a');
+                allTwitterLinks.forEach(link => {
+                    if (link.href && (link.href.includes('x.com') || link.href.includes('twitter.com') || link.href.includes('flowbert'))) {
+                        link.href = 'https://x.com/Nnashidk';
+                    }
+                });
+                
+                // Instagram backup
+                const allInstagramLinks = document.querySelectorAll('a');
+                allInstagramLinks.forEach(link => {
+                    if (link.href && (link.href.includes('instagram.com') || link.href.includes('framer.com/marketplace') || link.href.includes('gustave-flowbert'))) {
+                        link.href = 'https://instagram.com/_nashidk';
+                    }
+                });
+            }, 2000);
             
             // Update project descriptions to anime lines
             setTimeout(function() {
