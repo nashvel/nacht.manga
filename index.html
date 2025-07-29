@@ -102,6 +102,16 @@
             visibility: hidden !important;
             opacity: 0 !important;
         }
+        
+        /* Hide Menu elements via CSS */
+        *[data-framer-name*="menu"],
+        *[class*="menu"],
+        button[class*="menu"],
+        div[class*="menu"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
     </style>
     
     <script>
@@ -265,6 +275,53 @@
                         el.style.display = 'none !important';
                         el.remove();
                     }
+                });
+                
+                // Hide "Menu" elements - comprehensive approach
+                document.querySelectorAll('*').forEach(el => {
+                    const text = (el.innerText || '').trim();
+                    const textContent = (el.textContent || '').trim();
+                    
+                    if (text === 'Menu' || textContent === 'Menu' || 
+                        text === 'menu' || textContent === 'menu' ||
+                        text.toLowerCase() === 'menu') {
+                        el.style.display = 'none !important';
+                        el.style.visibility = 'hidden !important';
+                        el.style.opacity = '0 !important';
+                        el.style.pointerEvents = 'none !important';
+                        el.remove();
+                        
+                        // Also hide parent containers
+                        let parent = el.parentElement;
+                        while (parent && parent !== document.body) {
+                            if (parent.children.length <= 2) {
+                                parent.style.display = 'none !important';
+                                parent.style.visibility = 'hidden !important';
+                                parent.style.opacity = '0 !important';
+                            }
+                            parent = parent.parentElement;
+                        }
+                    }
+                });
+                
+                // Additional menu targeting by attributes and classes
+                const menuSelectors = [
+                    '[data-framer-name*="menu"]',
+                    '[class*="menu"]',
+                    '[id*="menu"]',
+                    'button[class*="menu"]',
+                    'div[class*="menu"]',
+                    'nav[class*="menu"]'
+                ];
+                
+                menuSelectors.forEach(selector => {
+                    const elements = document.querySelectorAll(selector);
+                    elements.forEach(el => {
+                        el.style.display = 'none !important';
+                        el.style.visibility = 'hidden !important';
+                        el.style.opacity = '0 !important';
+                        el.remove();
+                    });
                 });
                 
                 // Hide specific project cards in "Looking for more?" section only
